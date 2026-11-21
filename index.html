@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120a05">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rabanada de Ouro">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icone-180.png">
+<title>Rabanada de Ouro</title>
+<meta name="description" content="Rabanada recheada que continua crocante até a ceia: receitas, embalagem, preço e vendas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--marca:#e9b44c;--marca-forte:#c98a1e;--escuro:#2a1806;--fundo:#120a05;--borda:rgba(255,220,170,.08);--texto-2:#c4b29a;--sucesso:#22c55e;--seguro-topo:env(safe-area-inset-top);--seguro-base:env(safe-area-inset-bottom)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--fundo);color:#fbf4ea;font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input{font:inherit;color:inherit}
+p,h1,h2,h3{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+.ic{display:block;flex-shrink:0}
+.fundo-app{min-height:100dvh;background:radial-gradient(120% 50% at 80% -10%,rgba(201,138,40,.28),transparent 60%),radial-gradient(80% 40% at 0% 0%,rgba(150,70,20,.18),transparent 60%),var(--fundo)}
+.tela{max-width:448px;margin:0 auto;padding:max(20px,var(--seguro-topo)) 16px 112px}
+.cartao{background:linear-gradient(180deg,rgba(44,29,16,.92),rgba(24,15,8,.92));border:1px solid var(--borda)}
+.r-xl{border-radius:12px}.r-2xl{border-radius:16px}
+.t2{color:var(--texto-2)}.azul{color:var(--marca)}
+.flex{display:flex;align-items:center}.col{display:flex;flex-direction:column}
+.entre{justify-content:space-between}.g1{gap:4px}.g2{gap:8px}.g3{gap:12px}.g4{gap:16px}.g5{gap:20px}
+.mt1{margin-top:4px}.mt2{margin-top:8px}.mt3{margin-top:12px}.mt4{margin-top:16px}.mt5{margin-top:20px}.mt6{margin-top:24px}
+.f1{flex:1;min-width:0}.trunc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sem-scroll{scrollbar-width:none}.sem-scroll::-webkit-scrollbar{display:none}
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;border-top:1px solid var(--borda);background:rgba(20,12,6,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding-bottom:var(--seguro-base)}
+.nav ul{max-width:448px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0 10px;font-size:13px;color:#d4d4d4}
+.nav a.ativo{color:var(--marca);font-weight:600}
+/* cabeçalho de página */
+.cab{display:flex;align-items:flex-start;gap:12px}
+.cab h1{font-size:32px;font-weight:700;line-height:1.15}
+.cab p{margin-top:4px;font-size:15px;line-height:1.35;color:var(--texto-2)}
+.btn-ic{display:grid;place-items:center;border-radius:999px}
+/* chips */
+.chips{display:flex;gap:8px;overflow-x:auto;margin:20px -16px 0;padding:0 16px}
+.chip{flex-shrink:0;border-radius:999px;padding:10px 20px;font-size:15px;background:rgba(255,255,255,.07);color:#e5e5e5}
+.chip.ativo{background:var(--marca);color:var(--escuro);font-weight:500;box-shadow:0 0 16px rgba(233,180,76,.5)}
+.campo-busca{width:100%;margin-top:16px;padding:12px 16px;border-radius:12px;outline:none}
+.campo-busca:focus{border-color:var(--marca)}
+/* progresso */
+.barra{height:6px;width:100%;border-radius:999px;background:rgba(255,255,255,.1)}
+.barra>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--marca-forte),var(--marca));box-shadow:0 0 8px rgba(233,180,76,.6)}
+.anel{position:relative;flex-shrink:0}
+.anel span{position:absolute;inset:0;display:grid;place-items:center;font-size:20px;font-weight:700}
+/* miniaturas */
+.thumb{position:relative;overflow:hidden;background:linear-gradient(135deg,#7a4612,#2e1808 55%,#120a05)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.play-redondo{position:absolute;inset:0;margin:auto;width:48px;height:48px;border-radius:999px;background:rgba(0,0,0,.7);display:grid;place-items:center}
+/* home */
+.logo{display:flex;align-items:center;gap:12px}
+.logo-ic{width:48px;height:48px;border-radius:12px;box-shadow:0 0 16px rgba(233,180,76,.35);flex-shrink:0}
+.logo-ic .chave{position:absolute;right:-4px;bottom:0;background:var(--fundo);border-radius:999px;padding:2px;color:var(--marca)}
+.logo p{font-size:22px;font-weight:700;line-height:1.05;letter-spacing:-.01em}
+.badge{position:absolute;top:-2px;right:-2px;width:20px;height:20px;border-radius:999px;background:#ef4444;font-size:11px;font-weight:700;display:grid;place-items:center}
+.hero{position:relative;overflow:hidden;margin-top:20px;border-radius:16px;border:1px solid rgba(233,180,76,.3);padding:20px;background:linear-gradient(120deg,#22120a 0%,#4a2a0e 55%,#1c0f06 100%);box-shadow:0 0 30px rgba(201,138,40,.25)}
+.hero .brilho{position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 30%,rgba(245,197,98,.35),transparent 70%)}
+.hero .foto{position:absolute;top:0;right:0;height:100%;width:62%;object-fit:cover;object-position:75% 50%}
+.hero .fade{position:absolute;top:0;bottom:0;right:30%;width:32%;background:linear-gradient(90deg,#3c210b,transparent)}
+.hero .txt{position:relative;max-width:74%}
+.hero h2{font-size:25px;font-weight:700;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hero p{margin-top:8px;font-size:15px;line-height:1.35;color:#e5e5e5}
+.btn-hero{margin-top:16px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border-radius:999px;background:var(--marca);padding:10px 20px;font-size:15px;font-weight:600;color:var(--escuro);box-shadow:0 0 18px rgba(233,180,76,.6)}
+.btn-hero .bola{width:20px;height:20px;border-radius:999px;background:var(--escuro);display:grid;place-items:center;color:var(--marca)}
+.recentes{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:12px -16px 0;padding:0 16px}
+.recente{display:flex;gap:8px;width:92%;flex-shrink:0;scroll-snap-align:start}
+.recente .thumb{width:58%;aspect-ratio:16/10;border-radius:12px;flex-shrink:0}
+.recente .info{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:12px;border-radius:12px}
+.clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.atalhos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.atalhos a{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px;border-radius:12px;text-align:center;font-size:12px;font-weight:500;line-height:1.2}
+.ok-verde{color:#fff}
+/* aulas / módulos */
+.mod{display:flex;gap:12px;padding:10px;border-radius:16px}
+.mod .thumb{width:112px;height:96px;border-radius:12px;flex-shrink:0}
+.st{width:32px;height:32px;border-radius:999px;display:grid;place-items:center;flex-shrink:0}
+.st.ok{background:var(--sucesso)}.st.and{color:var(--escuro);background:var(--marca);box-shadow:0 0 12px rgba(233,180,76,.7)}.st.lock{background:rgba(255,255,255,.1)}
+.voltar{display:flex;align-items:center;gap:4px;font-size:15px;color:var(--marca)}
+.item-aula{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px}
+.num{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;font-size:14px;font-weight:600;background:rgba(255,255,255,.1);flex-shrink:0}
+.num.feito{background:var(--sucesso)}
+.player{margin-top:16px;overflow:hidden;border-radius:16px;border:1px solid var(--borda);box-shadow:0 0 30px rgba(201,138,40,.2);aspect-ratio:16/9;background:#000}
+.player iframe{width:100%;height:100%;border:0;display:block}
+.btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;font-weight:600}
+.btn.azul-bg{color:var(--escuro);background:var(--marca);box-shadow:0 0 18px rgba(233,180,76,.5)}
+.btn.concluida{background:rgba(34,197,94,.15);color:var(--sucesso)}
+/* materiais */
+.grade-mat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.mat{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 12px 12px;border-radius:16px}
+.mat .tit{margin-top:12px;font-size:14.5px;font-weight:600;line-height:1.2}
+.mat .baixar{color:var(--escuro);position:absolute;right:10px;bottom:10px;width:32px;height:32px;border-radius:999px;background:var(--marca);display:grid;place-items:center;box-shadow:0 0 12px rgba(233,180,76,.6)}
+.trava{margin-top:8px;display:flex;align-items:center;gap:6px;border-radius:999px;background:rgba(233,180,76,.15);padding:4px 10px;font-size:12px;font-weight:600;color:var(--marca)}
+.aviso{margin-top:16px;display:flex;align-items:center;gap:12px;border-radius:16px;border:1px solid rgba(233,180,76,.3);background:rgba(233,180,76,.1);padding:14px;font-size:14px;line-height:1.4}
+/* perfil */
+.avatar{position:relative;width:64px;height:64px;flex-shrink:0}
+.avatar .circ{width:100%;height:100%;border-radius:999px;overflow:hidden;background:#d4d4d4;display:grid;place-items:center}
+.avatar .circ img{width:100%;height:100%;object-fit:cover}
+.avatar .cam{position:absolute;right:-2px;bottom:-2px;width:24px;height:24px;border-radius:999px;border:2px solid #1a110a;color:var(--escuro);background:var(--marca);display:grid;place-items:center}
+.lista-perfil li+li{border-top:1px solid var(--borda)}
+.lista-perfil a,.lista-perfil button{width:100%;display:flex;align-items:center;gap:16px;padding:16px;text-align:left;font-size:15px}
+.campo-nome{min-width:0;flex:1;border-radius:12px;border:1px solid var(--marca);background:rgba(255,255,255,.05);padding:10px 12px;font-size:17px;outline:none}
+/* folha (bottom sheet) */
+.folha-fundo{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.folha{width:100%;max-width:448px;margin:0 auto;border-radius:24px 24px 0 0;padding:24px 24px max(24px,var(--seguro-base))}
+.folha h2{font-size:20px;font-weight:700}
+.btn-claro{background:rgba(255,255,255,.1)}
+/* instalar */
+.inst-topo{display:flex;align-items:center;gap:14px}
+.inst-topo img{width:56px;height:56px;border-radius:14px;box-shadow:0 0 18px rgba(233,180,76,.35);flex-shrink:0}
+.passos{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+.passo{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.45}
+.passo .n{width:26px;height:26px;border-radius:999px;background:var(--marca);color:var(--escuro);font-size:13px;font-weight:700;display:grid;place-items:center;flex-shrink:0}
+.chip-ic{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin:0 2px;width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,.12);color:var(--marca)}
+.seta-baixo{display:flex;justify-content:center;margin-top:14px;color:var(--marca);animation:pulo 1.2s ease-in-out infinite}
+@keyframes pulo{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.ib{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:10px 12px;border-radius:14px;border:1px solid var(--marca);background:#2a1a0c}
+.ib img{width:36px;height:36px;border-radius:9px;flex-shrink:0}
+.ib b{display:block;font-size:14.5px;line-height:1.25}
+.ib small{display:block;margin-top:1px;font-size:12px;color:var(--texto-2)}
+.ibb{flex-shrink:0;border-radius:12px;background:var(--marca);padding:9px 16px;font-size:13.5px;font-weight:700;color:var(--escuro)}
+.ibx{flex-shrink:0;padding:6px;color:var(--texto-2)}
+.entrar .ib{margin:0 0 20px}
+.lista-inst{margin:12px 0;padding-left:20px;list-style:decimal;line-height:1.8;font-size:15px}
+.lista-inst li{padding-left:2px}
+.lista-inst .chip-ic{width:24px;height:24px}
+.aviso-item{display:flex;gap:12px;padding:14px;border-radius:14px}
+.aviso-item .ponto{width:9px;height:9px;border-radius:999px;margin-top:6px;flex-shrink:0;background:transparent}
+.aviso-item.novo .ponto{background:var(--marca);box-shadow:0 0 8px rgba(233,180,76,.8)}
+.aviso-link{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:14px;font-weight:600;color:var(--marca)}
+.cert-preview{margin-top:20px;width:100%;border-radius:12px;box-shadow:0 0 30px rgba(201,138,40,.25);display:block}
+.cert-gerando{margin-top:20px;aspect-ratio:1600/1131;border-radius:12px;display:grid;place-items:center;font-size:14px}
+.cert-trava{margin-top:24px;padding:24px 20px;border-radius:16px;text-align:center}
+.cert-trava .cad{width:64px;height:64px;margin:0 auto;border-radius:999px;display:grid;place-items:center;background:rgba(233,180,76,.15);color:var(--marca)}
+/* entrar */
+.entrar{position:relative;display:flex;flex-direction:column;min-height:100dvh;overflow:hidden}
+.entrar .topo{position:absolute;left:0;right:0;top:0;height:52dvh}
+.entrar .topo img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;opacity:.85}
+.entrar .topo i{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,10,5,.4),rgba(18,10,5,.3) 50%,var(--fundo))}
+.entrar .conteudo{position:relative;flex:1;display:flex;flex-direction:column;width:100%;max-width:448px;margin:0 auto;padding:max(24px,var(--seguro-topo)) 24px max(24px,var(--seguro-base))}
+.entrar form{margin-top:auto}
+.entrar h1{font-size:30px;font-weight:700;line-height:1.2}
+.entrar input{width:100%;margin-top:8px;padding:16px;border-radius:16px;font-size:17px;outline:none}
+.entrar input:focus{border-color:var(--marca);box-shadow:0 0 0 3px rgba(233,180,76,.25)}
+.entrar .btn{margin-top:16px;border-radius:16px;padding:16px;font-size:17px}
+.entrar .btn:disabled{opacity:.4;box-shadow:none}
+/* capas dos módulos (sem foto) */
+.capa{position:absolute;inset:0;display:grid;place-items:center;color:#ffe2a3}
+.capa::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 70% at 75% 15%,rgba(255,214,140,.28),transparent 70%)}
+.capa .ic{position:relative;z-index:1;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.capa-n{position:absolute;left:8px;top:8px;z-index:1;border-radius:999px;background:rgba(0,0,0,.45);padding:2px 8px;font-size:11px;font-weight:700;color:#ffe2a3}
+.gravando{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px}
+.gravando b{font-size:17px}.gravando p{font-size:13.5px;line-height:1.45;color:#e9dccb;max-width:280px}
+.selo{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:rgba(233,180,76,.15);padding:4px 10px;font-size:12px;font-weight:600;color:var(--marca)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<input id="arquivo-foto" type="file" accept="image/*" hidden>
+<script>
+"use strict";
+// ======================================================================
+// Rabanada de Ouro — app da aluna em um único arquivo.
+// Para mudar aulas, vídeos ou materiais, edite o bloco DADOS abaixo:
+//  - aulas[].youtubeId: ID do vídeo da sua aula (ex.: vídeo não listado no YouTube)
+//  - materiais[].arquivo: nome do PDF nesta pasta ou link (Canva, Planilhas, Drive)
+// ======================================================================
+const DADOS = {"curso":{"nome":"Rabanada de Ouro","boasVindas":"Rabanada recheada, crocante até a ceia, pronta para vender neste Natal.","imagemHero":"img/hero.jpg","whatsappSuporte":"","liberacaoSequencial":false,"cargaHoraria":"7 horas"},"modulos":[{"id":"comece-por-aqui","numero":0,"imagem":"img/modulo-0.jpg","titulo":"Comece por aqui","categoria":"tecnica","icone":"rocket","cores":["#7a4a1a","#2a1607"],"aulas":[{"slug":"comecar-do-zero","titulo":"Como começar a vender doces do zero","youtubeId":"k0qrSp-FMKA","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":8,"troca":"Sem vídeo de boas-vindas genérico; virou um ponto de partida prático"},{"slug":"vender-muito-no-natal","titulo":"Como vender muito no Natal: produção e dicas","youtubeId":"6Vj7QqSQSfE","canal":"Dani Queiroz","minutos":10,"troca":"Não há vídeo de \"plano de 7 dias\"; este cobre o planejamento das vendas de Natal"},{"slug":"utensilios-basicos","titulo":"Utensílios básicos para começar","youtubeId":"LZWBiR3zopo","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":9,"troca":"Foco nos utensílios; a lista de ingredientes fica no material de apoio"}]},{"id":"a-base-perfeita","numero":1,"imagem":"img/modulo-1.jpg","titulo":"A base perfeita","categoria":"tecnica","icone":"wheat","cores":["#a8641c","#3a1d08"],"aulas":[{"slug":"qual-pao-usar","titulo":"Qual o melhor pão para rabanada","youtubeId":"Zouh4OXIQgE","canal":"Segredos da Comida","minutos":2},{"slug":"calda-base","titulo":"Calda base e rabanada tradicional","youtubeId":"9cbTJE0LgXo","canal":"Receitas de Pai","minutos":9},{"slug":"ponto-da-fritura","titulo":"Fritura certa: rabanada que não absorve óleo","youtubeId":"WQYzJnQM7b8","canal":"Culinária em Casa","minutos":10},{"slug":"coberturas","titulo":"Coberturas: açúcar, canela e caramelo de canela","youtubeId":"_a17JlGSnQI","canal":"Sweet Culinary","minutos":6},{"slug":"erros-encharcada","titulo":"Nunca mais rabanada encharcada de óleo","youtubeId":"o51egnHY8gg","canal":"Dona Margot","minutos":18}]},{"id":"rabanada-que-nao-murcha","numero":2,"imagem":"img/modulo-2.jpg","titulo":"Rabanada que não murcha","categoria":"tecnica","icone":"sparkles","cores":["#c48a2a","#3d2309"],"aulas":[{"slug":"tecnica-da-crocancia","titulo":"Sequinha por fora e molhadinha por dentro","youtubeId":"SMrOCjGwIao","canal":"Letícia Sweet Cake","minutos":6},{"slug":"sem-oleo-sem-bagunca","titulo":"Rabanada sequinha na frigideira, sem bagunça","youtubeId":"WN-hQeJ14vI","canal":"Ana Zambrin","minutos":10,"troca":"Não há vídeo sobre resfriamento; troquei por outra técnica de rabanada sequinha"},{"slug":"armazenamento-e-validade","titulo":"Como armazenar rabanadas","youtubeId":"WPrtR5zBqVs","canal":"Ajuda Marota","minutos":3},{"slug":"finalizar-forno-airfryer","titulo":"Finalização no forno e na airfryer","youtubeId":"gZvIFkQKWCs","canal":"Delícias do Zé","minutos":5,"troca":"Não há vídeo sobre como orientar o cliente a reaquecer; este mostra forno e airfryer"}]},{"id":"recheios-classicos","numero":3,"imagem":"img/modulo-3.jpg","titulo":"Recheios clássicos","categoria":"receitas","icone":"candy","cores":["#8a3f16","#2e1207"],"aulas":[{"slug":"recheio-doce-de-leite","titulo":"Recheio de doce de leite","youtubeId":"RaQnXoMirFI","canal":"Nandu Andrade","minutos":5},{"slug":"recheio-brigadeiro","titulo":"Brigadeiro, doce de leite e chocolate para vender","youtubeId":"VhoNf1CzsKY","canal":"Karen Munhoz","minutos":7},{"slug":"duas-tecnicas-recheio","titulo":"Duas técnicas: rechear antes ou depois de fritar","youtubeId":"7pXQwamNA3w","canal":"Letícia Sweet Cake","minutos":15,"troca":"Recheio de leite em pó já aparece na aula seguinte; entrou a técnica de rechear"},{"slug":"recheio-leite-em-po-avela","titulo":"Leite em pó com creme de avelã","youtubeId":"AEWtiVQHNT0","canal":"Cook'n Enjoy","minutos":6},{"slug":"rabanada-de-coco","titulo":"Rabanada de coco (sabor beijinho)","youtubeId":"3hXjZ2EUe-w","canal":"Papo Di Receitas","minutos":8,"troca":"Não há vídeo de rabanada de beijinho; a versão de coco é a mais próxima"},{"slug":"recheio-romeu-e-julieta","titulo":"Romeu e Julieta","youtubeId":"P1FoJ0j4x5s","canal":"Receitas (Ana Maria Braga)","minutos":7},{"slug":"avela-com-doce-de-leite","titulo":"Creme de avelã com doce de leite","youtubeId":"6aOlTiEoOuc","canal":"Cozinha da Wilza","minutos":10,"troca":"Não há vídeo de rabanada de prestígio; troquei por um sabor campeão de vendas"},{"slug":"recheio-creme-confeiteiro","titulo":"Creme de confeiteiro com geleia","youtubeId":"yT9GUDgCZ2o","canal":"Receitas da Japa","minutos":7}]},{"id":"recheios-gourmet","numero":4,"imagem":"img/modulo-4.jpg","titulo":"Recheios gourmet","categoria":"receitas","icone":"star","cores":["#9c2f2a","#2c0d0b"],"aulas":[{"slug":"rabanada-de-churros","titulo":"Rabanada de churros","youtubeId":"szQMpfFfDKU","canal":"Tour da Beleza","minutos":4,"troca":"Não há vídeo de rabanada de pistache; rabanada de churros está em alta"},{"slug":"frutas-vermelhas","titulo":"Calda de frutas vermelhas","youtubeId":"OtmeDppvhNg","canal":"Canal Tempera","minutos":6},{"slug":"caramelo-salgado","titulo":"Calda de caramelo salgado","youtubeId":"7iRDPT9Z7Ng","canal":"Lúcia♡Fui na Cozinha","minutos":7},{"slug":"rabanada-caramelada","titulo":"Rabanada caramelada com frutas","youtubeId":"pt7A-wEdm1M","canal":"Joyce Galvão","minutos":8,"troca":"Não há vídeo de avelã crocante; troquei pela versão caramelada"},{"slug":"tres-sabores-gourmet","titulo":"3 sabores gourmet para vender","youtubeId":"KJK84L8SyNk","canal":"Tábata Romero","minutos":9,"troca":"Red velvet só aparece em vídeo de 1 min; este traz 3 sabores, embalagem, validade e preço"},{"slug":"creme-de-limao","titulo":"Rabanada com creme de limão","youtubeId":"UCXinfnVhNI","canal":"Receitas (Rodrigo Hilbert)","minutos":4},{"slug":"rabanada-de-chef","titulo":"Rabanada de chef (versão gourmet)","youtubeId":"e7rgnNywYxs","canal":"Alex Atala","minutos":16,"troca":"O vídeo de doce de leite com nozes tem 42 min; troquei pela versão de chef"}]},{"id":"versoes-especiais","numero":5,"imagem":"img/modulo-5.jpg","titulo":"Versões especiais","categoria":"receitas","icone":"chef-hat","cores":["#6e5a1e","#221b07"],"aulas":[{"slug":"rabanada-de-forno","titulo":"Rabanada de forno, sem fritura","youtubeId":"BwZqSRECsro","canal":"Delícias da Cíntia","minutos":5},{"slug":"rabanada-airfryer","titulo":"Rabanada na airfryer","youtubeId":"BK_ONLuxz4o","canal":"Receitas Da Cris","minutos":7},{"slug":"rabanada-sem-lactose","titulo":"Rabanada sem leite e sem lactose","youtubeId":"kEusF1tHuOg","canal":"Ju Toledo","minutos":2},{"slug":"rabanada-de-panetone","titulo":"Rabanada de panetone e chocotone","youtubeId":"C1oLe-vuvt0","canal":"Dika da Naka","minutos":9},{"slug":"rabanada-brioche","titulo":"Rabanada de brioche (pain perdu)","youtubeId":"S8b2ZUR3X6w","canal":"Elisa Fernandes","minutos":10}]},{"id":"formatos-que-vendem","numero":6,"imagem":"img/modulo-6.jpg","titulo":"Formatos que vendem mais","categoria":"receitas","icone":"ice-cream-bowl","cores":["#a35a2a","#331509"],"aulas":[{"slug":"rabanada-no-pote","titulo":"Rabanada recheada no pote","youtubeId":"CRFVbwP70Hs","canal":"Doce, Sal e Etc - Lori Fonseca","minutos":12},{"slug":"pave-de-rabanada","titulo":"Pavê de rabanada (na taça)","youtubeId":"z7VXWrk8oRs","canal":"Alessandra Santos Pastel","minutos":18,"troca":"Não há vídeo de rabanada na taça; o pavê é servido em taça"},{"slug":"mini-rabanada","titulo":"Mini rabanada de bisnaguinha","youtubeId":"adi19aIi7MU","canal":"Receitas da Lauri","minutos":3},{"slug":"rabanada-de-travessa","titulo":"Rabanada de travessa","youtubeId":"HaFyt_vHwzk","canal":"Isamara Amâncio","minutos":8},{"slug":"rabanada-no-saquinho","titulo":"Rabanada no saquinho para vender","youtubeId":"LvrRp5Yt7iY","canal":"Perseguidora de Sonhos","minutos":11,"troca":"Não há vídeo de caixa presente de rabanada; o saquinho é o formato mais vendido"}]},{"id":"embalagem-e-apresentacao","numero":7,"imagem":"img/modulo-7.jpg","titulo":"Embalagem e apresentação","categoria":"vender","icone":"gift","cores":["#2f5a3a","#0c1f12"],"aulas":[{"slug":"embalagens-delivery","titulo":"Embalagens para delivery","youtubeId":"Qb9dkUwEPtg","canal":"iFood para Parceiros","minutos":12},{"slug":"montando-kits","titulo":"Montando kits para vender no Natal","youtubeId":"yJoxnZj0r6A","canal":"Cleonice Soares","minutos":12},{"slug":"fotos-com-celular","titulo":"Fotos que vendem, feitas com o celular","youtubeId":"CCraJf3fMh4","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":12}]},{"id":"precificacao-e-producao","numero":8,"imagem":"img/modulo-8.jpg","titulo":"Precificação e produção","categoria":"vender","icone":"calculator","cores":["#b07a22","#2f1d06"],"aulas":[{"slug":"ficha-tecnica","titulo":"Ficha técnica e custo real","youtubeId":"2NGdnlvpL08","canal":"Carlos Leme","minutos":14},{"slug":"como-precificar","titulo":"Como calcular o preço do seu doce","youtubeId":"M7Qm0QFgYsU","canal":"PlantLife Escola de Confeitaria Inclusiva","minutos":14},{"slug":"producao-em-lote","titulo":"Produção em volume: rabanada assada em lote","youtubeId":"lhuK-iZ7ul4","canal":"Isamara Amâncio","minutos":6,"troca":"Não há vídeo de 100 rabanadas; a versão assada é a mais prática para produzir em lote"},{"slug":"cronograma-de-producao","titulo":"Cronograma de produção","youtubeId":"eLG6F8_OuS4","canal":"Eloisa Cola","minutos":4}]},{"id":"vendas","numero":9,"imagem":"img/modulo-9.jpg","titulo":"Vendas","categoria":"vender","icone":"store","cores":["#8f2b2b","#2a0a0a"],"aulas":[{"slug":"montando-cardapio","titulo":"Montando o cardápio","youtubeId":"RJMI75PDuMU","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":14},{"slug":"vender-pelo-whatsapp","titulo":"Como vender pelo WhatsApp","youtubeId":"sX8KEILq1Sc","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":9},{"slug":"divulgacao-status","titulo":"Vendendo pelo status do WhatsApp","youtubeId":"hYxKFl-eRDs","canal":"Gabriel Teixeira","minutos":9},{"slug":"parcerias-empresas","titulo":"Parcerias: empresas, padarias e cafeterias","youtubeId":"RvmGfpBk77U","canal":"Rafa Cabral - Receitas Descomplicadas","minutos":9}]},{"id":"bonus","numero":10,"imagem":"img/modulo-10.jpg","rotulo":"Bônus","titulo":"Réveillon e o ano todo","categoria":"bonus","icone":"party-popper","cores":["#c9a13a","#2b2108"],"aulas":[{"slug":"rabanadas-de-reveillon","titulo":"Rabanada de creme de avelã para o Ano Novo","youtubeId":"yhqse9XNNbc","canal":"Dika da Naka","minutos":6},{"slug":"rabanada-o-ano-todo","titulo":"Rabanada francesa para café da manhã e brunch","youtubeId":"PCoAElC4Avg","canal":"Como faz (Léo Abreu)","minutos":6}]}],"materiais":[{"id":"lista-compras","titulo":"Lista de Compras e Utensílios","categoria":"producao","icone":"shopping-basket","cor":"#f5c562","tamanho":"PDF","arquivo":""},{"id":"validade-reaquecer","titulo":"Etiqueta de Validade e Como Reaquecer","categoria":"producao","icone":"clipboard-list","cor":"#fbbf88","tamanho":"PDF para imprimir","arquivo":""},{"id":"cronograma","titulo":"Cronograma de Produção 20 a 24/12","categoria":"producao","icone":"calendar-days","cor":"#f87171","tamanho":"PDF","arquivo":""},{"id":"ficha-tecnica","titulo":"Ficha Técnica e Custo Real","categoria":"vendas","icone":"calculator","cor":"#34d399","tamanho":"PDF","arquivo":""},{"id":"scripts-whatsapp","titulo":"Scripts de WhatsApp para Encomendas","categoria":"vendas","icone":"message-circle","cor":"#4ade80","tamanho":"PDF","arquivo":""},{"id":"cardapio-modelo","titulo":"Modelo de Cardápio de Rabanadas","categoria":"vendas","icone":"utensils","cor":"#f5c562","tamanho":"PDF","arquivo":""},{"id":"artes-canva","titulo":"Artes de Natal Editáveis + Cardápio (Canva)","categoria":"extras","icone":"gift","cor":"#f472b6","tamanho":"Adicional · link do Canva","arquivo":""},{"id":"planilha-precificacao","titulo":"Planilha de Precificação Automática","categoria":"extras","icone":"calculator","cor":"#34d399","tamanho":"Adicional · planilha","arquivo":""},{"id":"pacote-reveillon","titulo":"Pacote Réveillon: Rabanadas para o dia 31","categoria":"extras","icone":"party-popper","cor":"#fbbf24","tamanho":"Adicional · PDF","arquivo":""}],"avisos":[{"id":"boas-vindas","titulo":"Bem-vinda ao Rabanada de Ouro!","texto":"Comece pelo Módulo 0: lá você vê como começar a vender e se planejar para o Natal. Marque cada aula como concluída para acompanhar seu progresso.","link":"#/modulo/comece-por-aqui","rotulo":"Começar agora"},{"id":"natal","titulo":"Prepare-se para a semana do Natal","texto":"Os pedidos se concentram entre 20 e 24/12. Veja o Módulo 8 para montar seu cronograma de produção com antecedência.","link":"#/modulo/precificacao-e-producao","rotulo":"Ver cronograma"}]};
+const ICONES = {"rocket":"<path d=\"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5\"/><path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09\"/><path d=\"M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z\"/><path d=\"M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05\"/>","wheat":"<path d=\"M2 22 16 8\"/><path d=\"M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z\"/><path d=\"M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z\"/><path d=\"M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z\"/><path d=\"M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z\"/><path d=\"M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z\"/><path d=\"M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z\"/><path d=\"M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","candy":"<path d=\"M10 7v10.9\"/><path d=\"M14 6.1V17\"/><path d=\"M16 7V3a1 1 0 0 1 1.707-.707 2.5 2.5 0 0 0 2.152.717 1 1 0 0 1 1.131 1.131 2.5 2.5 0 0 0 .717 2.152A1 1 0 0 1 21 8h-4\"/><path d=\"M16.536 7.465a5 5 0 0 0-7.072 0l-2 2a5 5 0 0 0 0 7.07 5 5 0 0 0 7.072 0l2-2a5 5 0 0 0 0-7.07\"/><path d=\"M8 17v4a1 1 0 0 1-1.707.707 2.5 2.5 0 0 0-2.152-.717 1 1 0 0 1-1.131-1.131 2.5 2.5 0 0 0-.717-2.152A1 1 0 0 1 3 16h4\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","chef-hat":"<path d=\"M10 11v5\"/><path d=\"M14 11v5\"/><path d=\"M6 12.65c0-.457-.316-.844-.727-1.041A4 4 0 017.52 4.034a1.53 1.53 0 001.367-.547 4 4 0 016.225 0 1.53 1.53 0 001.367.547 4 4 0 012.248 7.575c-.411.197-.727.584-.727 1.04V19a2 2 0 01-2 2H8a2 2 0 01-2-2z\"/><path d=\"M6 16h12\"/>","ice-cream-bowl":"<path d=\"M12 17c5 0 8-2.69 8-6H4c0 3.31 3 6 8 6m-4 4h8m-4-3v3M5.14 11a3.5 3.5 0 1 1 6.71 0\"/><path d=\"M12.14 11a3.5 3.5 0 1 1 6.71 0\"/><path d=\"M15.5 6.5a3.5 3.5 0 1 0-7 0\"/>","gift":"<path d=\"M12 7v14\"/><path d=\"M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8\"/><path d=\"M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5\"/><rect x=\"3\" y=\"7\" width=\"18\" height=\"4\" rx=\"1\"/>","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\"/><line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\"/><line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\"/><path d=\"M16 10h.01\"/><path d=\"M12 10h.01\"/><path d=\"M8 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M8 14h.01\"/><path d=\"M12 18h.01\"/><path d=\"M8 18h.01\"/>","store":"<path d=\"M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5\"/><path d=\"M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244\"/><path d=\"M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05\"/>","party-popper":"<path d=\"M5.8 11.3 2 22l10.7-3.79\"/><path d=\"M4 3h.01\"/><path d=\"M22 8h.01\"/><path d=\"M15 2h.01\"/><path d=\"M22 20h.01\"/><path d=\"m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10\"/><path d=\"m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17\"/><path d=\"m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7\"/><path d=\"M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z\"/>","cookie":"<path d=\"M11 17h.01\"/><path d=\"M11.496 2c.324-.016.558.292.529.615a4 4 0 004.235 4.368.713.713 0 01.758.757 4 4 0 004.366 4.237c.323-.03.63.204.614.527a10 10 0 01-2.915 6.566A1 1 0 114.93 4.918 10 10 0 0111.496 2\"/><path d=\"M12 12h.01\"/><path d=\"M16 16h.01\"/><path d=\"M16 3h.01\"/><path d=\"M21 4h.01\"/><path d=\"M21 8h.01\"/><path d=\"M7 14h.01\"/><path d=\"M9 8h.01\"/>","shopping-basket":"<path d=\"m15 11-1 9\"/><path d=\"m19 11-4-7\"/><path d=\"M2 11h20\"/><path d=\"m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4\"/><path d=\"M4.5 15.5h15\"/><path d=\"m5 11 4-7\"/><path d=\"m9 11 1 9\"/>","clipboard-list":"<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\"/><path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/><path d=\"M12 11h4\"/><path d=\"M12 16h4\"/><path d=\"M8 11h.01\"/><path d=\"M8 16h.01\"/>","calendar-days":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 13h.01\"/><path d=\"M12 13h.01\"/><path d=\"M16 13h.01\"/><path d=\"M8 17h.01\"/><path d=\"M12 17h.01\"/><path d=\"M16 17h.01\"/>","utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>","video":"<path d=\"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5\"/><rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\"/>","house":"\u003cpath d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\"/>\u003cpath d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>","square-play":"\u003crect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/>\u003cpath d=\"M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z\"/>","file-text":"\u003cpath d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\"/>\u003cpath d=\"M14 2v5a1 1 0 0 0 1 1h5\"/>\u003cpath d=\"M10 9H8\"/>\u003cpath d=\"M16 13H8\"/>\u003cpath d=\"M16 17H8\"/>","user":"\u003cpath d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"/>\u003ccircle cx=\"12\" cy=\"7\" r=\"4\"/>","bell":"\u003cpath d=\"M10.268 21a2 2 0 0 0 3.464 0\"/>\u003cpath d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","chevron-right":"\u003cpath d=\"m9 18 6-6-6-6\"/>","chevron-left":"\u003cpath d=\"m15 18-6-6 6-6\"/>","clock":"\u003ccircle cx=\"12\" cy=\"12\" r=\"10\"/>\u003cpath d=\"M12 6v6l4 2\"/>","circle-check":"\u003ccircle cx=\"12\" cy=\"12\" r=\"10\"/>\u003cpath d=\"m16 9-5.5 5.5L8 12\"/>","wrench":"\u003cpath d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z\"/>","trophy":"\u003cpath d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/>\u003cpath d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/>\u003cpath d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/>\u003cpath d=\"M4 22h16\"/>\u003cpath d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/>\u003cpath d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>","lock":"\u003crect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/>\u003cpath d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>","check":"\u003cpath d=\"M20 6 9 17l-5-5\"/>","play":"\u003cpath d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>","search":"\u003cpath d=\"m21 21-4.34-4.34\"/>\u003ccircle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-down":"\u003cpath d=\"M12 5v14\"/>\u003cpath d=\"m19 12-7 7-7-7\"/>","arrow-right":"\u003cpath d=\"M5 12h14\"/>\u003cpath d=\"m12 5 7 7-7 7\"/>","badge-dollar-sign":"\u003cpath d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/>\u003cpath d=\"M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8\"/>\u003cpath d=\"M12 18V6\"/>","camera":"\u003cpath d=\"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z\"/>\u003ccircle cx=\"12\" cy=\"13\" r=\"3\"/>","droplets":"\u003cpath d=\"M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z\"/>\u003cpath d=\"M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97\"/>","file-check":"\u003cpath d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\"/>\u003cpath d=\"M14 2v5a1 1 0 0 0 1 1h5\"/>\u003cpath d=\"m9 15 2 2 4-4\"/>","message-circle":"\u003cpath d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\"/>","smartphone":"\u003crect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/>\u003cpath d=\"M12 18h.01\"/>","stethoscope":"\u003cpath d=\"M11 2v2\"/>\u003cpath d=\"M5 2v2\"/>\u003cpath d=\"M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1\"/>\u003cpath d=\"M8 15a6 6 0 0 0 12 0v-3\"/>\u003ccircle cx=\"20\" cy=\"10\" r=\"2\"/>","truck":"\u003cpath d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\"/>\u003cpath d=\"M15 18H9\"/>\u003cpath d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\"/>\u003ccircle cx=\"17\" cy=\"18\" r=\"2\"/>\u003ccircle cx=\"7\" cy=\"18\" r=\"2\"/>","headphones":"\u003cpath d=\"M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3\"/>","log-out":"\u003cpath d=\"m16 17 5-5-5-5\"/>\u003cpath d=\"M21 12H9\"/>\u003cpath d=\"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4\"/>","pencil":"\u003cpath d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/>\u003cpath d=\"m15 5 4 4\"/>","settings":"\u003cpath d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\"/>\u003ccircle cx=\"12\" cy=\"12\" r=\"3\"/>","trash":"\u003cpath d=\"M10 11v6\"/>\u003cpath d=\"M14 11v6\"/>\u003cpath d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6\"/>\u003cpath d=\"M3 6h18\"/>\u003cpath d=\"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"/>","image-plus":"\u003cpath d=\"M16 5h6\"/>\u003cpath d=\"M19 2v6\"/>\u003cpath d=\"M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5\"/>\u003cpath d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\"/>\u003ccircle cx=\"9\" cy=\"9\" r=\"2\"/>","x":"\u003cpath d=\"M18 6 6 18\"/>\u003cpath d=\"m6 6 12 12\"/>","share":"\u003cpath d=\"M12 2v13\"/>\u003cpath d=\"m16 6-4-4-4 4\"/>\u003cpath d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/>","square-plus":"\u003crect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>\u003cpath d=\"M8 12h8\"/>\u003cpath d=\"M12 8v8\"/>","ellipsis-vertical":"\u003ccircle cx=\"12\" cy=\"12\" r=\"1\"/>\u003ccircle cx=\"12\" cy=\"5\" r=\"1\"/>\u003ccircle cx=\"12\" cy=\"19\" r=\"1\"/>","ellipsis":"\u003ccircle cx=\"12\" cy=\"12\" r=\"1\"/>\u003ccircle cx=\"19\" cy=\"12\" r=\"1\"/>\u003ccircle cx=\"5\" cy=\"12\" r=\"1\"/>","download":"\u003cpath d=\"M12 15V3\"/>\u003cpath d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>\u003cpath d=\"m7 10 5 5 5-5\"/>","copy":"\u003crect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/>\u003cpath d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>"};
+
+const { curso, modulos, materiais, avisos } = DADOS;
+const todasAulas = modulos.flatMap((m) => m.aulas);
+const $app = document.getElementById("app");
+const DIA = 864e5;
+
+// ---------- utilidades ----------
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function ic(nome, o = {}) {
+  const s = o.s ?? 24;
+  return `<svg class="ic ${o.cls ?? ""}" width="${s}" height="${s}" viewBox="0 0 24 24" fill="${o.fill ? "currentColor" : "none"}" stroke="${o.stroke ?? "currentColor"}" stroke-width="${o.sw ?? 2}" stroke-linecap="round" stroke-linejoin="round"${o.style ? ` style="${o.style}"` : ""}>${ICONES[nome] ?? ""}</svg>`;
+}
+const duracaoTotal = (min) => { const h = Math.floor(min / 60), m = min % 60; return h ? `${h}h${m ? ` ${m}min` : ""}` : `${m} min`; };
+const thumbAula = (a) => (a.youtubeId ? `https://i.ytimg.com/vi/${a.youtubeId}/hqdefault.jpg` : "");
+const rotuloMod = (m) => m.rotulo || "Módulo " + m.numero;
+function capa(m, estilo = "", grande = false, etiqueta = "") {
+  if (m.imagem) return `<div class="thumb" style="${estilo}"><img src="${esc(m.imagem)}" alt="" loading="lazy">${etiqueta ? `<span class="capa-n">${etiqueta}</span>` : ""}</div>`;
+  const [c1, c2] = m.cores || ["#7a4612", "#120a05"];
+  return `<div class="thumb" style="background:linear-gradient(135deg,${c1},${c2});${estilo}"><div class="capa">${etiqueta ? `<span class="capa-n">${etiqueta}</span>` : ""}${ic(m.icone || "cookie", { s: grande ? 64 : 40, sw: 1.6 })}</div></div>`;
+}
+function capaAula(a, estilo = "") {
+  const m = moduloDaAula(a.slug), n = todasAulas.indexOf(a) + 1;
+  return capa(m, estilo, false, `Aula ${n}`);
+}
+const buscarAula = (slug) => todasAulas.find((a) => a.slug === slug);
+const moduloDaAula = (slug) => modulos.find((m) => m.aulas.some((a) => a.slug === slug));
+const proximaAula = (slug) => todasAulas[todasAulas.findIndex((a) => a.slug === slug) + 1];
+const primeiroNome = (n) => n.trim().split(/\s+/)[0] || "";
+
+// ---------- perfil salvo no aparelho ----------
+const CHAVE = "rabanada-ouro:perfil";
+const CHAVE_PA = "rabanada-ouro:primeiro-acesso";
+function lerPerfil() {
+  try {
+    const p = JSON.parse(localStorage.getItem(CHAVE) || "null");
+    return p && typeof p.nome === "string" ? { concluidas: [], historico: [], ...p } : null;
+  } catch { return null; }
+}
+function gravarPerfil(p, renderizar = true) {
+  if (p) localStorage.setItem(CHAVE, JSON.stringify(p)); else localStorage.removeItem(CHAVE);
+  if (renderizar) render();
+}
+function atualizar(mudar, renderizar = true) { const p = lerPerfil(); if (p) gravarPerfil(mudar(p), renderizar); }
+function primeiroAcesso(p) {
+  let d = localStorage.getItem(CHAVE_PA);
+  if (!d || isNaN(Date.parse(d))) { d = p.criadoEm; localStorage.setItem(CHAVE_PA, d); }
+  return d;
+}
+async function prepararFoto(arquivo, lado = 320) {
+  const bmp = await createImageBitmap(arquivo);
+  const corte = Math.min(bmp.width, bmp.height), t = Math.min(lado, corte);
+  const c = document.createElement("canvas"); c.width = c.height = t;
+  c.getContext("2d").drawImage(bmp, (bmp.width - corte) / 2, (bmp.height - corte) / 2, corte, corte, 0, 0, t, t);
+  bmp.close?.();
+  return c.toDataURL("image/jpeg", 0.85);
+}
+
+// ---------- progresso ----------
+function progressoModulo(m, feitas) {
+  const n = m.aulas.filter((a) => feitas.has(a.slug)).length;
+  return { feitas: n, total: m.aulas.length, pct: Math.round((n / m.aulas.length) * 100) };
+}
+function statusModulo(m, feitas) {
+  if (progressoModulo(m, feitas).pct === 100) return "concluido";
+  const i = modulos.indexOf(m);
+  if (curso.liberacaoSequencial && i > 0 && progressoModulo(modulos[i - 1], feitas).pct < 100) return "bloqueado";
+  return "andamento";
+}
+const moduloAtual = (f) => modulos.find((m) => statusModulo(m, f) === "andamento") ?? modulos[modulos.length - 1];
+function proximaPendente(f) { const m = moduloAtual(f); return m.aulas.find((a) => !f.has(a.slug)) ?? m.aulas[0]; }
+function progressoGeral(f) {
+  const n = todasAulas.filter((a) => f.has(a.slug)).length;
+  return { concluidos: modulos.filter((m) => progressoModulo(m, f).pct === 100).length, total: modulos.length, aulas: n, totalAulas: todasAulas.length, pct: Math.round((n / todasAulas.length) * 100) };
+}
+
+// ---------- componentes ----------
+const barra = (pct) => `<div class="barra"><i style="width:${pct}%"></i></div>`;
+function anel(pct, t = 80) {
+  const r = (t - 10) / 2, c = 2 * Math.PI * r;
+  return `<div class="anel" style="width:${t}px;height:${t}px"><svg width="${t}" height="${t}" style="transform:rotate(-90deg)"><circle cx="${t / 2}" cy="${t / 2}" r="${r}" stroke="rgba(255,255,255,.08)" stroke-width="8" fill="none"/><circle cx="${t / 2}" cy="${t / 2}" r="${r}" stroke="#e9b44c" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct / 100)}" style="filter:drop-shadow(0 0 4px rgba(233,180,76,.6))"/></svg><span>${pct}%</span></div>`;
+}
+const thumb = (src, cls, estilo = "") => `<div class="thumb ${cls}" style="${estilo}">${src ? `<img src="${esc(src)}" alt="" loading="lazy">` : `<div style="position:absolute;inset:0;display:grid;place-items:center;color:rgba(233,180,76,.7)">${ic("cookie", { s: 40, sw: 1.2 })}</div>`}</div>`;
+function cabecalho(titulo, sub, icone, acao = "") {
+  return `<header class="cab">${icone ? `<span style="margin-top:4px;color:var(--marca)">${ic(icone, { s: 40, sw: 1.8 })}</span>` : ""}<div class="f1"><h1>${titulo}</h1><p>${sub}</p></div>${acao}</header>`;
+}
+const botaoBusca = (acao, aberto) => `<button class="btn-ic" data-acao="${acao}" aria-label="Buscar" style="margin-top:8px;padding:6px;color:${aberto ? "var(--marca)" : "#fff"}">${ic("search", { s: 26 })}</button>`;
+const chips = (opcoes, valor, acao) => `<div class="chips sem-scroll">${opcoes.map(([id, l]) => `<button class="chip ${id === valor ? "ativo" : ""}" data-acao="${acao}" data-v="${id}">${l}</button>`).join("")}</div>`;
+function logo() {
+  return `<div class="logo"><img class="logo-ic" src="icone-192.png" alt=""><p>Rabanada<br>de <span class="azul">Ouro</span></p></div>`;
+}
+function nav(rotaAtual) {
+  const abas = [["", "Home", "house"], ["aulas", "Aulas", "square-play"], ["materiais", "Materiais", "file-text"], ["perfil", "Perfil", "user"]];
+  const ativa = (id) => (id === "" ? rotaAtual === "" : rotaAtual === id || (id === "aulas" && (rotaAtual === "aula" || rotaAtual === "modulo")) || (id === "perfil" && rotaAtual === "certificado"));
+  return `<nav class="nav"><ul>${abas.map(([id, l, i]) => { const a = ativa(id); return `<li><a href="#/${id}" class="${a ? "ativo" : ""}">${ic(i, { s: 24, sw: a ? 2.4 : 1.6, fill: a, cls: a ? "ic-ativo" : "" })}${l}</a></li>`; }).join("")}</ul></nav>`;
+}
+
+// ---------- instalação (PWA) ----------
+const CHAVE_INSTALAR = "rabanada-ouro:instalar-dispensado";
+const ua = navigator.userAgent;
+const ehIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const ehAndroid = /Android/i.test(ua);
+const ehAppInterno = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Line\/|TikTok|musical_ly|Snapchat/i.test(ua);
+const ehInstalado = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+let promptInstalar = null;
+window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); promptInstalar = e; const r = rotaAtual().nome; if (r === "" || r === "entrar") render(); });
+window.addEventListener("appinstalled", () => { localStorage.setItem(CHAVE_INSTALAR, "instalado"); ui.folha = null; render(); });
+function tipoInstalacao() {
+  if (ehAppInterno) return "app-interno";
+  if (promptInstalar) return "prompt";
+  if (ehIOS) return "ios";
+  if (ehAndroid) return "android";
+  return "computador";
+}
+const chipIc = (nome) => `<span class="chip-ic">${ic(nome, { s: 15 })}</span>`;
+// Cartão "Instale o app" no topo (some ao instalar; o ✕ esconde por 7 dias).
+const cartaoEscondido = () => { const v = localStorage.getItem(CHAVE_INSTALAR); return v === "instalado" || (!!v && Date.now() - Number(v) < 7 * DIA); };
+const mostrarCartaoInstalar = () => !ehInstalado() && !cartaoEscondido() && (!!promptInstalar || ehIOS || ehAndroid);
+function cartaoInstalar() {
+  if (!mostrarCartaoInstalar()) return "";
+  return `<div class="ib" role="region" aria-label="Instalar o app"><img src="icone-192.png" alt=""><div class="f1"><b>Instale o app no seu celular</b><small>Acesso rápido, em tela cheia</small></div><button class="ibb" data-acao="instalar">Instalar</button><button class="ibx" data-acao="fechar-cartao-instalar" aria-label="Fechar aviso">${ic("x", { s: 18 })}</button></div>`;
+}
+// Janela com o passo a passo (quando o navegador não oferece a instalação automática).
+function folhaInstalar() {
+  let titulo, passos, nota, extra = "";
+  if (ehAppInterno) {
+    titulo = "Abra no navegador para instalar";
+    passos = [`Toque em <b>⋯</b> ou <b>⋮</b>, no canto de cima.`, `Escolha <b>Abrir no navegador</b> (Safari ou Chrome).`, `No navegador, toque em <b>Instalar</b> no topo do app.`];
+    nota = "O Instagram e o Facebook não deixam instalar apps pelo navegador deles.";
+    extra = `<button class="btn btn-claro mt3" style="border-radius:16px" data-acao="copiar-link">${ic("copy", { s: 18 })} Copiar link do app</button>`;
+  } else if (ehIOS) {
+    titulo = "Instalar no iPhone";
+    passos = [`Abra este endereço no <b>Safari</b>.`, `Toque no botão <b>Compartilhar</b> ${chipIc("share")} na barra de baixo da tela.`, `Role a lista e toque em <b>Adicionar à Tela de Início</b>.`, `Toque em <b>Adicionar</b>, no canto de cima.`];
+    nota = "Pronto: o ícone do app aparece na sua tela inicial.";
+  } else if (ehAndroid) {
+    titulo = "Instalar no Android";
+    passos = [`Toque no menu <b>⋮</b> do navegador (canto de cima).`, `Toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.`, `Confirme em <b>Instalar</b>.`];
+    nota = "Use o Chrome, se a opção não aparecer.";
+  } else {
+    titulo = "Instalar no computador";
+    passos = [`No Chrome ou no Edge, clique no ícone de instalar ${chipIc("download")} na barra de endereço.`, `Confirme em <b>Instalar</b>.`];
+    nota = "Para a melhor experiência, abra este link no celular.";
+  }
+  return `<div class="folha-fundo" data-acao="fechar-folha"><div class="folha cartao" data-parar role="dialog" aria-modal="true" aria-label="Como instalar"><h2>${titulo}</h2>
+    <ol class="lista-inst">${passos.map((p) => `<li>${p}</li>`).join("")}</ol><p class="t2" style="font-size:14px">${nota}</p>${extra}
+    <button class="btn azul-bg mt5" style="border-radius:16px" data-acao="fechar-folha">Entendi</button></div></div>`;
+}
+
+// ---------- avisos (sino) ----------
+const CHAVE_LIDOS = "rabanada-ouro:avisos-lidos";
+function avisosAtuais(p) {
+  const lista = [...avisos];
+  const inicio = primeiroAcesso(p);
+  if (materiais.some((m) => m.liberaEmDias) && materiais.every((m) => falta(m, inicio) === 0)) {
+    lista.unshift({ id: "materiais-liberados", titulo: "Novos materiais liberados!", texto: "Os materiais que estavam travados já estão disponíveis na aba Materiais.", link: "#/materiais", rotulo: "Ver materiais" });
+  }
+  return lista;
+}
+const avisosLidos = () => { try { return JSON.parse(localStorage.getItem(CHAVE_LIDOS) || "[]"); } catch { return []; } };
+const contarNaoLidos = (p) => { const l = avisosLidos(); return avisosAtuais(p).filter((a) => !l.includes(a.id)).length; };
+function folhaAvisos(p) {
+  const lista = avisosAtuais(p), lidos = avisosLidos();
+  localStorage.setItem(CHAVE_LIDOS, JSON.stringify([...new Set([...lidos, ...lista.map((a) => a.id)])]));
+  const itens = lista.length
+    ? lista.map((a) => `<li class="aviso-item cartao mt2 ${lidos.includes(a.id) ? "" : "novo"}"><span class="ponto"></span><div class="f1"><p style="font-size:15px;font-weight:600">${esc(a.titulo)}</p><p class="t2 mt1" style="font-size:14px;line-height:1.45">${esc(a.texto)}</p>${a.link ? `<a class="aviso-link" href="${esc(a.link)}">${esc(a.rotulo || "Ver")} ${ic("chevron-right", { s: 16 })}</a>` : ""}</div></li>`).join("")
+    : `<p class="t2 mt4" style="text-align:center">Nenhum aviso por enquanto.</p>`;
+  return `<div class="folha-fundo" data-acao="fechar-folha"><div class="folha cartao" data-parar role="dialog" aria-modal="true" aria-label="Avisos"><div class="flex entre"><h2>Avisos</h2><button class="btn-ic btn-claro" style="width:34px;height:34px" data-acao="fechar-folha" aria-label="Fechar">${ic("x", { s: 18 })}</button></div><ul class="mt2" style="max-height:60vh;overflow:auto">${itens}</ul></div></div>`;
+}
+if ("serviceWorker" in navigator && location.protocol !== "file:") window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+
+// ---------- estado da interface ----------
+const ui = { filtroAulas: "todos", buscaAulas: null, filtroMat: "todos", buscaMat: null, editandoNome: false, folha: null, erroFoto: "" };
+
+// ---------- telas ----------
+function telaEntrar() {
+  return `<main class="fundo-app entrar">
+    ${curso.imagemHero ? `<div class="topo"><img src="${esc(curso.imagemHero)}" alt=""><i></i></div>` : ""}
+    <div class="conteudo">${cartaoInstalar()}${logo()}
+      <form id="form-entrar">
+        <h1>Crie seu perfil</h1>
+        <p class="mt2 t2" style="font-size:15px">Como você quer ser chamada? Seu progresso fica salvo neste aparelho.</p>
+        <label for="nome" style="display:block;margin-top:24px;font-size:14px;font-weight:500;color:#d4d4d4">Seu nome</label>
+        <input id="nome" class="cartao" maxlength="40" autocomplete="given-name" placeholder="Ex.: Maria">
+        <button id="btn-entrar" class="btn azul-bg" type="submit" disabled>Entrar no app ${ic("arrow-right", { s: 20 })}</button>
+        <p class="flex g2 mt5 t2" style="font-size:12px;line-height:1.5;align-items:flex-start">${ic("smartphone", { s: 16, style: "margin-top:2px" })}Não precisa de senha. Se trocar de celular ou limpar os dados do navegador, é só criar o perfil de novo.</p>
+      </form>
+    </div></main>`;
+}
+
+function telaHome(p, f) {
+  const modulo = moduloAtual(f), prog = progressoModulo(modulo, f);
+  const ultima = p.historico[0] && buscarAula(p.historico[0]);
+  const continuar = ultima && !f.has(ultima.slug) ? ultima : proximaPendente(f);
+  const vistas = p.historico.map(buscarAula).filter(Boolean).slice(0, 6);
+  const recentes = vistas.length ? vistas : modulo.aulas.slice(0, 4);
+  const nome = primeiroNome(p.nome);
+  const atalhos = [["#/aulas", "Minhas Aulas", "play", "var(--marca)", true], ["#/materiais", "Materiais de Apoio", "file-text", "var(--marca)", false], ["#/modulo/precificacao-e-producao", "Preço e Produção", "calculator", "var(--marca)", false], ["#/certificado", "Meu Certificado", "trophy", "#fbbf24", true]];
+  const naoLidos = contarNaoLidos(p);
+  return `<main>${cartaoInstalar()}
+    <header class="flex entre">${logo()}<button class="btn-ic" data-acao="abrir-avisos" style="position:relative;padding:4px;color:var(--marca)" aria-label="Avisos${naoLidos ? ` (${naoLidos} novos)` : ""}">${ic("bell", { s: 30, sw: 1.8 })}${naoLidos ? `<span class="badge" style="color:#fff">${naoLidos}</span>` : ""}</button></header>
+    <section class="hero"><div class="brilho"></div>
+      ${curso.imagemHero ? `<img class="foto" src="${esc(curso.imagemHero)}" alt=""><div class="fade"></div>` : ""}
+      <div class="txt"><h2>${nome ? `Olá, ${esc(nome)}!` : "Seja bem-vindo(a)!"}</h2><p>${esc(curso.boasVindas)}</p>
+        <a class="btn-hero" href="#/aula/${continuar.slug}"><span class="bola">${ic("play", { s: 10, fill: true })}</span>${f.size || p.historico.length ? "Continuar assistindo" : "Começar o curso"}</a></div>
+    </section>
+    <section class="cartao r-2xl flex g5 mt3" style="padding:16px">${anel(prog.pct)}
+      <div class="f1"><p class="t2" style="font-size:14px">Seu progresso no curso</p><p class="mt1" style="font-size:15px;font-weight:600">Módulo: ${esc(modulo.titulo)}</p>
+        <div class="flex g3 mt3">${barra(prog.pct)}<span class="t2" style="font-size:12px;flex-shrink:0">${prog.feitas} de ${prog.total} aulas</span></div></div>
+    </section>
+    <div class="flex entre mt5"><h2 style="font-size:20px;font-weight:600">${vistas.length ? "Aulas Recentes" : "Comece por aqui"}</h2><a href="#/aulas" class="flex g1 azul" style="font-size:14px">Ver todas ${ic("chevron-right", { s: 16 })}</a></div>
+    <div class="recentes sem-scroll">${recentes.map((a) => `<a class="recente" href="#/aula/${a.slug}"><div style="position:relative;width:58%;flex-shrink:0">${capaAula(a, "width:100%;aspect-ratio:16/10;border-radius:12px")}<span class="play-redondo">${ic("play", { s: 22, fill: true, style: "margin-left:2px" })}</span></div>
+      <div class="info cartao"><p class="clamp3" style="font-size:15px;font-weight:500;line-height:1.3">${esc(a.titulo)}</p><div class="flex entre t2" style="font-size:14px"><span class="flex g1">${ic("clock", { s: 16 })} ${a.minutos} min</span>${f.has(a.slug) ? `<span style="color:#22c55e">${ic("circle-check", { s: 22, fill: true, stroke: "#fff" })}</span>` : ""}</div></div></a>`).join("")}</div>
+    <h2 class="mt5" style="font-size:20px;font-weight:600">Acesso Rápido</h2>
+    <div class="atalhos">${atalhos.map(([h, l, i, cor, fill]) => `<a class="cartao" href="${h}"><span style="color:${cor}">${ic(i, { s: 30, fill })}</span>${l}</a>`).join("")}</div>
+  </main>`;
+}
+
+function iconeStatus(st) {
+  if (st === "concluido") return `<span class="st ok">${ic("check", { s: 18, sw: 3 })}</span>`;
+  if (st === "andamento") return `<span class="st and">${ic("play", { s: 14, fill: true, style: "margin-left:2px" })}</span>`;
+  return `<span class="st lock">${ic("lock", { s: 15 })}</span>`;
+}
+function listaModulos(f) {
+  const t = (ui.buscaAulas || "").toLowerCase();
+  const lista = modulos.filter((m) => (ui.filtroAulas === "todos" || m.categoria === ui.filtroAulas) && (!t || m.titulo.toLowerCase().includes(t) || m.aulas.some((a) => a.titulo.toLowerCase().includes(t))));
+  if (!lista.length) return `<p class="t2" style="text-align:center;padding:40px 0">Nenhum módulo encontrado.</p>`;
+  return lista.map((m) => {
+    const pr = progressoModulo(m, f), st = statusModulo(m, f), min = m.aulas.reduce((s, a) => s + a.minutos, 0);
+    const corpo = `<div class="mod cartao">${capa(m)}<div class="f1 col" style="justify-content:center;padding-right:4px">
+      <div class="flex entre g2" style="align-items:flex-start"><div><p style="font-size:14px;color:#e5e5e5">${rotuloMod(m)}</p><p style="font-size:17px;font-weight:500;line-height:1.2">${esc(m.titulo)}</p><p class="t2 mt1" style="font-size:14px">${m.aulas.length} aulas • ${duracaoTotal(min)}</p></div>${iconeStatus(st)}</div>
+      <div class="flex g3 mt2">${barra(pr.pct)}<span style="width:44px;text-align:right;font-size:14px;flex-shrink:0">${pr.pct}%</span></div></div></div>`;
+    return `<li style="margin-top:12px">${st === "bloqueado" ? corpo : `<a href="#/modulo/${m.id}">${corpo}</a>`}</li>`;
+  }).join("");
+}
+function telaAulas(p, f) {
+  return `<main>${cabecalho("Aulas", "Da base perfeita até a venda, aula por aula.", null, botaoBusca("busca-aulas", ui.buscaAulas !== null))}
+    ${ui.buscaAulas !== null ? `<input class="campo-busca cartao" id="busca-aulas" placeholder="Buscar módulo ou aula" value="${esc(ui.buscaAulas)}">` : ""}
+    ${chips([["todos", "Todos"], ["tecnica", "Técnica"], ["receitas", "Receitas"], ["vender", "Vender"], ["bonus", "Bônus"]], ui.filtroAulas, "filtro-aulas")}
+    <ul id="lista-modulos" style="margin-top:8px">${listaModulos(f)}</ul></main>`;
+}
+
+function telaModulo(id, f) {
+  const m = modulos.find((x) => x.id === id);
+  if (!m) return telaNaoEncontrada();
+  const pr = progressoModulo(m, f), bloq = statusModulo(m, f) === "bloqueado", min = m.aulas.reduce((s, a) => s + a.minutos, 0);
+  return `<main><a class="voltar" href="#/aulas">${ic("chevron-left", { s: 18 })} Aulas</a>
+    ${capa(m, "margin-top:16px;aspect-ratio:16/8;border-radius:16px", true)}
+    <p class="t2 mt4" style="font-size:14px">${rotuloMod(m)}</p><h1 style="font-size:26px;font-weight:700;line-height:1.2">${esc(m.titulo)}</h1>
+    <p class="t2 mt1" style="font-size:14px">${m.aulas.length} aulas • ${duracaoTotal(min)}</p>
+    <div class="flex g3 mt3">${barra(pr.pct)}<span style="font-size:14px;flex-shrink:0">${pr.pct}%</span></div>
+    ${bloq ? `<p class="cartao r-xl flex g2 mt5 t2" style="padding:16px;font-size:14px">${ic("lock", { s: 16 })} Conclua o módulo anterior para liberar.</p>` : ""}
+    <ol class="mt5">${m.aulas.map((a, i) => {
+      const feita = f.has(a.slug);
+      const item = `<div class="item-aula cartao"><span class="num ${feita ? "feito" : ""}">${feita ? "✓" : i + 1}</span><div class="f1"><p style="font-size:15px;font-weight:500;line-height:1.3">${esc(a.titulo)}</p><p class="flex g1 mt1 t2" style="font-size:12px">${ic("clock", { s: 12 })} ${a.minutos} min</p></div>${bloq ? `<span class="t2">${ic("lock", { s: 16 })}</span>` : `<span class="azul">${ic("play", { s: 16, fill: true })}</span>`}</div>`;
+      return `<li style="margin-top:8px">${bloq ? item : `<a href="#/aula/${a.slug}">${item}</a>`}</li>`;
+    }).join("")}</ol></main>`;
+}
+
+function botoesAula(slug, f) {
+  const feita = f.has(slug), prox = proximaAula(slug);
+  return `<button class="btn mt6 ${feita ? "concluida" : "cartao"}" data-acao="concluir" data-v="${slug}">${ic("circle-check", { s: 20 })} ${feita ? "Aula concluída" : "Marcar como concluída"}</button>
+    ${prox ? `<a class="btn azul-bg mt3" href="#/aula/${prox.slug}" data-acao="concluir-e-seguir" data-v="${slug}">${feita ? "Próxima aula" : "Concluir e ir para a próxima"} ${ic("chevron-right", { s: 18 })}</a>` : ""}`;
+}
+function telaAula(slug, f) {
+  const a = buscarAula(slug);
+  if (!a) return telaNaoEncontrada();
+  const m = moduloDaAula(slug), bloq = statusModulo(m, f) === "bloqueado";
+  if (!bloq) atualizar((p) => (p.historico[0] === slug ? p : { ...p, historico: [slug, ...p.historico.filter((s) => s !== slug)].slice(0, 10) }), false);
+  const src = `https://www.youtube-nocookie.com/embed/${a.youtubeId}?rel=0&modestbranding=1&playsinline=1`;
+  return `<main><a class="voltar" href="#/modulo/${m.id}">${ic("chevron-left", { s: 18 })} ${rotuloMod(m)}</a>
+    <div class="player">${bloq ? `<div class="cartao t2" style="height:100%;display:grid;place-items:center;text-align:center;padding:24px;font-size:14px"><span class="col g2" style="align-items:center">${ic("lock", { s: 22 })}Conclua o módulo anterior para liberar esta aula.</span></div>` : a.youtubeId ? `<iframe src="${src}" title="${esc(a.titulo)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : `<div class="cartao gravando"><span class="azul">${ic("video", { s: 34, sw: 1.6 })}</span><b>Aula em gravação</b><p>O vídeo desta aula entra aqui em breve. Você já pode marcar como concluída quando assistir.</p></div>`}</div>
+    <p class="t2 mt4" style="font-size:14px">${esc(m.titulo)}</p><h1 style="font-size:24px;font-weight:700;line-height:1.2">${esc(a.titulo)}</h1>
+    <p class="flex g2 mt1 t2" style="font-size:14px">${ic("clock", { s: 14 })} ${a.minutos} min${a.youtubeId ? ` • Vídeo: ${esc(a.canal)}` : ` • <span class="selo">Em breve</span>`}</p>${a.youtubeId && !bloq ? `<a class="aviso-link" href="https://www.youtube.com/watch?v=${a.youtubeId}" target="_blank" rel="noopener">Abrir no YouTube ${ic("chevron-right", { s: 16 })}</a>` : ""}
+    ${bloq ? "" : `<div id="botoes-aula">${botoesAula(slug, f)}</div>`}</main>`;
+}
+
+const ICONES_MAT = { ferramentas: ["wrench", "var(--marca)"], fornecedores: ["truck", "#7dd3fc"], precos: ["badge-dollar-sign", "#34d399"], diagnostico: ["stethoscope", "var(--marca)"], vidro: ["smartphone", "#7dd3fc"], molhado: ["droplets", "#22d3ee"], whatsapp: ["message-circle", "#4ade80"], instagram: ["camera", "#f472b6"], garantia: ["file-check", "#fbbf24"] };
+function falta(m, inicio) { return m.liberaEmDias ? Math.max(0, Date.parse(inicio) + m.liberaEmDias * DIA - Date.now()) : 0; }
+function formatarFalta(ms) { const min = Math.ceil(ms / 6e4), d = Math.floor(min / 1440), h = Math.floor((min % 1440) / 60), m = min % 60; return d ? `${d}d ${h}h` : h ? `${h}h ${m}min` : `${m} min`; }
+function conteudoMateriais(p) {
+  const inicio = primeiroAcesso(p), t = (ui.buscaMat || "").toLowerCase();
+  const lista = materiais.filter((m) => (ui.filtroMat === "todos" || m.categoria === ui.filtroMat) && (!t || m.titulo.toLowerCase().includes(t)));
+  const pend = materiais.filter((m) => falta(m, inicio) > 0);
+  let aviso = "";
+  if (pend.length) {
+    const d = new Date(Date.now() + Math.min(...pend.map((m) => falta(m, inicio))));
+    aviso = `<div class="aviso"><span class="azul">${ic("clock", { s: 20 })}</span><p><b>${pend.length} ${pend.length === 1 ? "material será liberado" : "materiais serão liberados"}</b> em ${d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })} às ${d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}. Aproveite para avançar nas aulas!</p></div>`;
+  }
+  const cards = lista.map((m) => {
+    const fl = falta(m, inicio), lib = fl === 0, i = m.icone || "file-text", cor = m.cor || "var(--marca)";
+    return `<li class="mat cartao"><span style="color:${lib && m.arquivo ? cor : "#8a7a66"}">${ic(i, { s: 42, sw: 1.8 })}</span><p class="tit">${esc(m.titulo)}</p><p class="t2 mt1" style="font-size:12px">${esc(m.tamanho)}</p>
+      ${lib && !m.arquivo ? `<p class="trava">${ic("clock", { s: 12 })} Em breve</p>` : lib ? `<a class="baixar" href="${esc(m.arquivo)}" target="_blank" rel="noopener" aria-label="Abrir ${esc(m.titulo)}">${ic("arrow-down", { s: 18, sw: 2.6 })}</a>` : `<p class="trava">${ic("lock", { s: 12 })} Libera em ${formatarFalta(fl)}</p>`}</li>`;
+  }).join("");
+  return `${aviso}<ul class="grade-mat">${cards}</ul>${lista.length ? "" : `<p class="t2" style="text-align:center;padding:40px 0">Nenhum material encontrado.</p>`}`;
+}
+function telaMateriais(p) {
+  return `<main>${cabecalho("Materiais", "Listas, fichas e modelos para produzir e vender.", "file-text", botaoBusca("busca-mat", ui.buscaMat !== null))}
+    ${ui.buscaMat !== null ? `<input class="campo-busca cartao" id="busca-mat" placeholder="Buscar material" value="${esc(ui.buscaMat)}">` : ""}
+    ${chips([["todos", "Todos"], ["producao", "Produção"], ["vendas", "Vendas"], ["extras", "Extras"]], ui.filtroMat, "filtro-mat")}
+    <div id="conteudo-mat">${conteudoMateriais(p)}</div></main>`;
+}
+
+function telaPerfil(p, f) {
+  const pg = progressoGeral(f), desde = new Date(p.criadoEm).toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+  const suporte = curso.whatsappSuporte ? `https://wa.me/${curso.whatsappSuporte}` : "#";
+  const itens = [["Meus Certificados", "trophy", "#fbbf24", "#/certificado"], ["Configurações", "settings", "#e5e5e5", "#/perfil"], ["Suporte", "headphones", "#e5e5e5", suporte]];
+  const cartaoNome = ui.editandoNome
+    ? `<form id="form-nome" class="flex g2"><input id="campo-nome" class="campo-nome" maxlength="40" value="${esc(p.nome)}"><button type="submit" class="btn-ic" aria-label="Salvar nome" style="width:40px;height:40px;background:var(--marca)">${ic("check", { s: 18 })}</button><button type="button" class="btn-ic btn-claro" data-acao="cancelar-nome" aria-label="Cancelar" style="width:40px;height:40px">${ic("x", { s: 18 })}</button></form>`
+    : `<div class="flex g4"><button class="avatar" data-acao="abrir-foto" aria-label="Alterar foto do perfil"><span class="circ">${p.foto ? `<img src="${p.foto}" alt="">` : `<span style="color:#525252;margin-top:12px">${ic("user", { s: 56, fill: true, sw: 0 })}</span>`}</span><span class="cam">${ic("camera", { s: 12, sw: 2.5 })}</span></button>
+        <div class="f1"><p class="trunc" style="font-size:18px;font-weight:600">${esc(p.nome)}</p><p class="trunc t2" style="font-size:14px">No curso desde ${desde}</p></div>
+        <button class="btn-ic btn-claro" data-acao="editar-nome" aria-label="Editar nome" style="width:36px;height:36px">${ic("pencil", { s: 16 })}</button></div>`;
+  return `<main>${cabecalho("Perfil", "Gerencie sua conta e acompanhe seu desempenho.", "user")}
+    <section class="cartao r-2xl mt6" style="padding:16px">${cartaoNome}${ui.erroFoto ? `<p class="mt3" style="font-size:14px;color:#f87171">${esc(ui.erroFoto)}</p>` : ""}</section>
+    <section class="cartao r-2xl flex g4 mt3" style="padding:16px"><span style="color:#fbbf24">${ic("trophy", { s: 40, fill: true, sw: 1.4 })}</span>
+      <div class="f1"><p style="font-size:15px;font-weight:500">Seu Progresso Geral</p><div class="flex g3 mt2">${barra(pg.pct)}<span style="font-size:14px;font-weight:500;flex-shrink:0">${pg.pct}%</span></div>
+      <p class="t2" style="margin-top:6px;font-size:12px">Conclusão de ${pg.concluidos} de ${pg.total} módulos • ${pg.aulas} de ${pg.totalAulas} aulas</p></div></section>
+    <ul class="cartao r-2xl mt3 lista-perfil" style="overflow:hidden">${itens.map(([l, i, cor, h]) => `<li><a href="${h}"${h.startsWith("http") ? ' target="_blank" rel="noopener"' : ""}><span style="color:${cor}">${ic(i, { s: 22 })}</span><span class="f1">${l}</span><span class="t2">${ic("chevron-right", { s: 18 })}</span></a></li>`).join("")}
+      ${ehInstalado() ? "" : `<li><button data-acao="abrir-instalar"><span class="azul">${ic("download", { s: 22 })}</span><span class="f1">Instalar o app</span><span class="t2">${ic("chevron-right", { s: 18 })}</span></button></li>`}
+      <li><button data-acao="abrir-sair"><span style="color:#f97316">${ic("log-out", { s: 22 })}</span><span class="f1">Sair da Conta</span><span class="t2">${ic("chevron-right", { s: 18 })}</span></button></li></ul>
+    <p class="t2 mt4" style="text-align:center;font-size:12px">Acesso completo • dados salvos neste aparelho</p></main>`;
+}
+function folha(p, f) {
+  if (ui.folha === "instalar") return folhaInstalar();
+  if (ui.folha === "avisos") return folhaAvisos(p);
+  if (ui.folha === "foto") return `<div class="folha-fundo" data-acao="fechar-folha"><div class="folha cartao" data-parar><h2>Foto do perfil</h2><p class="t2 mt1" style="font-size:14px">A foto fica salva só neste aparelho.</p>
+    <button class="btn azul-bg mt5" style="border-radius:16px" data-acao="escolher-foto">${ic("image-plus", { s: 20 })} ${p.foto ? "Trocar foto" : "Escolher foto"}</button>
+    ${p.foto ? `<button class="btn btn-claro mt2" style="border-radius:16px;color:#f87171" data-acao="remover-foto">${ic("trash", { s: 18 })} Remover foto</button>` : ""}
+    <button class="btn btn-claro mt2" style="border-radius:16px" data-acao="fechar-folha">Cancelar</button></div></div>`;
+  if (ui.folha === "sair") { const n = progressoGeral(f).aulas; return `<div class="folha-fundo" data-acao="fechar-folha"><div class="folha cartao" data-parar><h2>Sair da conta?</h2>
+    <p class="t2 mt2" style="font-size:15px;line-height:1.45">Seu nome e seu progresso (${n} ${n === 1 ? "aula concluída" : "aulas concluídas"}) serão apagados deste aparelho. Isso não pode ser desfeito.</p>
+    <button class="btn mt5" style="border-radius:16px;background:rgba(239,68,68,.9)" data-acao="sair">Sair e apagar dados</button>
+    <button class="btn btn-claro mt2" style="border-radius:16px" data-acao="fechar-folha">Cancelar</button></div></div>`; }
+  return "";
+}
+const telaNaoEncontrada = () => `<main><p class="t2" style="padding:40px 0;text-align:center">Página não encontrada.</p><a class="btn azul-bg" href="#/">Voltar para o início</a></main>`;
+
+// ---------- certificado ----------
+const dataBR = (iso) => new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+let certCache = { chave: "", blob: null, url: "" };
+function telaCertificado(p, f) {
+  const pg = progressoGeral(f);
+  const topo = `<a class="voltar" href="#/perfil">${ic("chevron-left", { s: 18 })} Perfil</a>${cabecalho("Meus Certificados", "Seu certificado de conclusão do curso Rabanada de Ouro.", "trophy")}`;
+  if (pg.pct < 100) {
+    return `<main>${topo}<section class="cartao cert-trava"><div class="cad">${ic("lock", { s: 28 })}</div>
+      <h2 class="mt4" style="font-size:20px;font-weight:700">Certificado bloqueado</h2>
+      <p class="t2 mt2" style="font-size:15px;line-height:1.45">Conclua todas as aulas para liberar o seu certificado de conclusão.</p>
+      <div class="flex g3 mt5">${barra(pg.pct)}<span style="font-size:14px;font-weight:600;flex-shrink:0">${pg.pct}%</span></div>
+      <p class="t2 mt2" style="font-size:13px">${pg.aulas} de ${pg.totalAulas} aulas concluídas</p>
+      <a class="btn azul-bg mt5" href="#/aulas">Continuar as aulas ${ic("chevron-right", { s: 18 })}</a></section></main>`;
+  }
+  if (!p.concluidoEm) atualizar((x) => ({ ...x, concluidoEm: new Date().toISOString() }), false);
+  const nome = p.nome, data = dataBR(p.concluidoEm || new Date().toISOString());
+  setTimeout(() => prepararCertificado(nome, data), 0);
+  const podeCompartilhar = !!(navigator.canShare && navigator.share);
+  return `<main>${topo}
+    <div id="area-cert">${certCache.chave === nome + "|" + data ? `<img class="cert-preview" src="${certCache.url}" alt="Certificado de ${esc(nome)}">` : `<div class="cert-gerando cartao t2">Gerando seu certificado…</div>`}</div>
+    <p class="t2 mt3" style="font-size:13px;text-align:center">Concluído em ${data} · em nome de <b style="color:#fff">${esc(nome)}</b></p>
+    <button class="btn azul-bg mt5" data-acao="baixar-certificado">${ic("download", { s: 20 })} Baixar certificado</button>
+    ${podeCompartilhar ? `<button class="btn btn-claro mt2" data-acao="compartilhar-certificado">${ic("share", { s: 18 })} Compartilhar</button>` : ""}
+    <p class="t2 mt4" style="font-size:12px;text-align:center;line-height:1.5">O nome vem do seu perfil. Para mudar, edite o nome na aba Perfil antes de baixar.</p></main>`;
+}
+async function prepararCertificado(nome, data) {
+  const chave = nome + "|" + data;
+  if (certCache.chave !== chave) {
+    const canvas = await desenharCertificado(nome, data);
+    const blob = await new Promise((r) => canvas.toBlob(r, "image/png"));
+    if (certCache.url) URL.revokeObjectURL(certCache.url);
+    certCache = { chave, blob, url: URL.createObjectURL(blob) };
+  }
+  const area = document.getElementById("area-cert");
+  if (area && rotaAtual().nome === "certificado") area.innerHTML = `<img class="cert-preview" src="${certCache.url}" alt="Certificado de ${esc(nome)}">`;
+}
+const nomeArquivoCert = () => "certificado-rabanada-de-ouro.png";
+async function baixarCertificado() {
+  const p = lerPerfil(); if (!p) return;
+  await prepararCertificado(p.nome, dataBR(p.concluidoEm || new Date().toISOString()));
+  const a = document.createElement("a");
+  a.href = certCache.url; a.download = nomeArquivoCert();
+  document.body.appendChild(a); a.click(); a.remove();
+}
+async function compartilharCertificado() {
+  const p = lerPerfil(); if (!p) return;
+  await prepararCertificado(p.nome, dataBR(p.concluidoEm || new Date().toISOString()));
+  const arquivo = new File([certCache.blob], nomeArquivoCert(), { type: "image/png" });
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [arquivo] })) await navigator.share({ files: [arquivo], title: "Meu certificado", text: "Concluí o curso Rabanada de Ouro!" });
+    else baixarCertificado();
+  } catch {}
+}
+function carregarImagem(src) { return new Promise((ok, erro) => { const i = new Image(); i.onload = () => ok(i); i.onerror = erro; i.src = src; }); }
+function retanguloRedondo(x, l, t, w, h, r) { x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); }
+async function desenharCertificado(nome, data) {
+  const fontes = ['700 82px "Playfair Display"', 'italic 600 76px "Playfair Display"', "800 26px Inter", "700 18px Inter", "500 24px Inter", "600 15px Inter"];
+  await Promise.all(fontes.map((ft) => document.fonts.load(ft).catch(() => {})));
+  const W = 1600, H = 1131, c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  const grad = (g, paradas) => { paradas.forEach(([o, cor]) => g.addColorStop(o, cor)); return g; };
+  const texto = (t, px, py, fonte, cor, alinhar = "left", espaco = "0px") => { x.font = fonte; x.fillStyle = cor; x.textAlign = alinhar; if ("letterSpacing" in x) x.letterSpacing = espaco; x.fillText(t, px, py); if ("letterSpacing" in x) x.letterSpacing = "0px"; };
+
+  // fundo claro
+  x.fillStyle = "#fffaf2"; x.fillRect(0, 0, W, H);
+  x.fillStyle = grad(x.createRadialGradient(W, 0, 0, W, 0, 1100), [[0, "#fbefd9"], [1, "rgba(251,239,217,0)"]]); x.fillRect(0, 0, W, H);
+  x.fillStyle = grad(x.createRadialGradient(300, H, 0, 300, H, 900), [[0, "#f8efe1"], [1, "rgba(248,239,225,0)"]]); x.fillRect(0, 0, W, H);
+
+  // faixa lateral escura
+  x.fillStyle = "#120a05"; x.fillRect(0, 0, 300, H);
+  x.fillStyle = grad(x.createRadialGradient(240, 0, 0, 240, 0, 560), [[0, "rgba(201,138,40,.55)"], [1, "rgba(201,138,40,0)"]]); x.fillRect(0, 0, 300, H);
+  x.fillStyle = grad(x.createRadialGradient(0, H, 0, 0, H, 460), [[0, "rgba(150,70,20,.35)"], [1, "rgba(150,70,20,0)"]]); x.fillRect(0, 0, 300, H);
+  x.fillStyle = grad(x.createLinearGradient(0, 0, 0, H), [[0, "#c98a1e"], [1, "#8a5410"]]); x.fillRect(294, 0, 6, H);
+
+  // ícone do app
+  try {
+    const logo = await carregarImagem("icone-512.png");
+    x.save(); x.shadowColor = "rgba(233,180,76,.5)"; x.shadowBlur = 40; retanguloRedondo(x, 70, 90, 160, 160, 36); x.fillStyle = "#120a05"; x.fill(); x.restore();
+    x.save(); retanguloRedondo(x, 70, 90, 160, 160, 36); x.clip(); x.drawImage(logo, 70, 90, 160, 160); x.restore();
+  } catch {}
+  texto("Rabanada", 147, 318, "800 26px Inter", "#ffffff", "center");
+  x.font = "800 26px Inter";
+  const l1 = x.measureText("de ").width, l2 = x.measureText("Ouro").width, ini = 147 - (l1 + l2) / 2;
+  texto("de ", ini, 348, "800 26px Inter", "#ffffff");
+  texto("Ouro", ini + l1, 348, "800 26px Inter", "#e9b44c");
+
+  // dados do curso na faixa
+  const dado = (rotulo, linhas, y, tam = 34) => { texto(rotulo, 44, y, "400 17px Inter", "#e6d3b8"); linhas.forEach((ln, i) => texto(ln, 44, y + 40 + i * (tam + 4), `800 ${tam}px Inter`, "#ffffff")); };
+  dado("Carga horária", [curso.cargaHoraria], 790);
+  dado("Conteúdo", [`${modulos.length} módulos`, `${todasAulas.length} aulas`], 880);
+  dado("Modalidade", ["Online"], 1010, 26);
+
+  // moldura
+  x.strokeStyle = "#ecdcc2"; x.lineWidth = 2; retanguloRedondo(x, 341, 41, W - 382, H - 82, 18); x.stroke();
+  x.strokeStyle = "#f3e8d6"; x.lineWidth = 1; retanguloRedondo(x, 351.5, 51.5, W - 403, H - 103, 12); x.stroke();
+
+  // medalha
+  x.save(); x.translate(1330, 110);
+  x.fillStyle = "#8a5410"; x.beginPath(); x.moveTo(45, 95); x.lineTo(30, 145); x.lineTo(55, 132); x.lineTo(68, 150); x.lineTo(78, 105); x.closePath(); x.fill();
+  x.fillStyle = "#c98a1e"; x.beginPath(); x.moveTo(105, 95); x.lineTo(120, 145); x.lineTo(95, 132); x.lineTo(82, 150); x.lineTo(72, 105); x.closePath(); x.fill();
+  x.fillStyle = grad(x.createLinearGradient(17, 10, 133, 126), [[0, "#f5c562"], [1, "#8a5410"]]); x.beginPath(); x.arc(75, 68, 58, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = "rgba(255,255,255,.65)"; x.lineWidth = 2; x.setLineDash([4, 5]); x.beginPath(); x.arc(75, 68, 47, 0, Math.PI * 2); x.stroke(); x.setLineDash([]);
+  x.strokeStyle = "#fff"; x.lineWidth = 9; x.lineCap = "round"; x.lineJoin = "round"; x.beginPath(); x.moveTo(52, 69); x.lineTo(67, 84); x.lineTo(98, 52); x.stroke();
+  x.restore();
+
+  // títulos
+  const L = 420;
+  texto("CERTIFICADO DE CONCLUSÃO", L, 140, "700 18px Inter", "#c98a1e", "left", "5.8px");
+  texto("Rabanada", L, 240, '700 82px "Playfair Display"', "#120a05");
+  texto("de Ouro", L, 324, '700 82px "Playfair Display"', "#120a05");
+  texto("Certificamos que", L, 400, "400 24px Inter", "#5e5045");
+
+  // nome do aluno (diminui a fonte se for muito longo)
+  let tam = 76;
+  do { x.font = `italic 600 ${tam}px "Playfair Display"`; } while (x.measureText(nome).width > 960 && (tam -= 2) > 36);
+  texto(nome, L, 488, `italic 600 ${tam}px "Playfair Display"`, "#8a5410");
+  x.fillStyle = "#c98a1e"; x.fillRect(L, 510, 960, 2);
+
+  // texto com trechos em negrito
+  const trechos = [["concluiu com aproveitamento o curso livre ", 0], ["Rabanada de Ouro", 1], [", com carga horária de ", 0], [curso.cargaHoraria, 1], [", abrangendo a técnica da crocância, recheios clássicos e gourmet, embalagem, precificação, produção e vendas.", 0]];
+  const palavras = trechos.flatMap(([t, b]) => t.split(/(?<= )/).map((p) => [p, b]));
+  let px = L, py = 570; const larguraMax = 980, alturaLinha = 37;
+  for (const [p, b] of palavras) {
+    x.font = `${b ? 700 : 400} 24px Inter`;
+    const w = x.measureText(p).width;
+    if (px + w - L > larguraMax && px > L) { px = L; py += alturaLinha; }
+    texto(p, px, py, `${b ? 700 : 400} 24px Inter`, b ? "#120a05" : "#3a2e25");
+    px += w;
+  }
+
+  // módulos em etiquetas
+  let cx = L, cy = py + 40;
+  x.font = "600 15px Inter";
+  for (const m of modulos) {
+    const w = x.measureText(m.rotulo || m.titulo).width + 30;
+    if (cx + w - L > 1020) { cx = L; cy += 45; }
+    retanguloRedondo(x, cx, cy, w, 35, 17.5); x.fillStyle = "#fbefd9"; x.fill(); x.strokeStyle = "#ecd3a6"; x.lineWidth = 1; x.stroke();
+    texto(m.rotulo || m.titulo, cx + 15, cy + 23, "600 15px Inter", "#8a5410");
+    cx += w + 10;
+  }
+
+  // data de conclusão
+  texto("Concluído em", L, 990, "500 17px Inter", "#6e6055");
+  texto(data, L, 1026, "800 30px Inter", "#120a05", "left", "1px");
+  return c;
+}
+
+// ---------- roteamento ----------
+function rotaAtual() { const [nome = "", param = ""] = location.hash.replace(/^#\/?/, "").split("/"); return { nome, param: decodeURIComponent(param) }; }
+let ultimaRota = "";
+function render() {
+  const { nome, param } = rotaAtual();
+  const p = lerPerfil();
+  if (!p && nome !== "entrar") { location.replace("#/entrar"); return; }
+  if (p && nome === "entrar") { location.replace("#/"); return; }
+  const chaveRota = nome + "/" + param;
+  if (chaveRota !== ultimaRota) { window.scrollTo(0, 0); ui.folha = null; ui.editandoNome = false; ui.erroFoto = ""; if (nome === "materiais" && param) ui.filtroMat = param; }
+  ultimaRota = chaveRota;
+  if (!p) {
+    const digitado = document.getElementById("nome")?.value || "";
+    $app.innerHTML = telaEntrar() + (ui.folha === "instalar" ? folhaInstalar() : "");
+    ligarEntrar();
+    if (digitado) { const c = document.getElementById("nome"); c.value = digitado; document.getElementById("btn-entrar").disabled = digitado.trim().length < 2; }
+    return;
+  }
+  const f = new Set(p.concluidas);
+  const telas = { "": () => telaHome(p, f), aulas: () => telaAulas(p, f), modulo: () => telaModulo(param, f), aula: () => telaAula(param, f), materiais: () => telaMateriais(p), perfil: () => telaPerfil(p, f), certificado: () => telaCertificado(p, f) };
+  const corpo = (telas[nome] || telaNaoEncontrada)();
+  $app.innerHTML = `<div class="fundo-app"><div class="tela">${corpo}</div>${nav(nome)}${folha(p, f)}</div>`;
+  if (ui.editandoNome) { const c = document.getElementById("campo-nome"); c?.focus(); c?.setSelectionRange(c.value.length, c.value.length); }
+}
+function ligarEntrar() {
+  const campo = document.getElementById("nome"), btn = document.getElementById("btn-entrar");
+  campo.addEventListener("input", () => { btn.disabled = campo.value.trim().length < 2; });
+  document.getElementById("form-entrar").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nome = campo.value.trim();
+    if (nome.length < 2) return;
+    if (!localStorage.getItem(CHAVE_PA)) localStorage.setItem(CHAVE_PA, new Date().toISOString());
+    gravarPerfil({ nome, criadoEm: new Date().toISOString(), concluidas: [], historico: [] }, false);
+    location.replace("#/");
+  });
+  setTimeout(() => campo.focus(), 50);
+}
+
+// ---------- ações ----------
+document.addEventListener("click", (e) => {
+  const alvo = e.target.closest("[data-acao]");
+  if (!alvo) return;
+  if (e.target.closest("[data-parar]") && alvo.classList.contains("folha-fundo")) return;
+  const acao = alvo.dataset.acao, v = alvo.dataset.v;
+  const alternar = (slug, renderizar) => atualizar((p) => {
+    const concluidas = p.concluidas.includes(slug) ? p.concluidas.filter((s) => s !== slug) : [...p.concluidas, slug];
+    const tudo = todasAulas.every((a) => concluidas.includes(a.slug));
+    return { ...p, concluidas, concluidoEm: tudo ? p.concluidoEm || new Date().toISOString() : p.concluidoEm };
+  }, renderizar);
+  switch (acao) {
+    case "filtro-aulas": ui.filtroAulas = v; render(); break;
+    case "busca-aulas": ui.buscaAulas = ui.buscaAulas === null ? "" : null; render(); document.getElementById("busca-aulas")?.focus(); break;
+    case "filtro-mat": ui.filtroMat = v; render(); break;
+    case "busca-mat": ui.buscaMat = ui.buscaMat === null ? "" : null; render(); document.getElementById("busca-mat")?.focus(); break;
+    case "concluir": {
+      alternar(v, false);
+      document.getElementById("botoes-aula").innerHTML = botoesAula(v, new Set(lerPerfil().concluidas));
+      break;
+    }
+    case "concluir-e-seguir": { const p = lerPerfil(); if (p && !p.concluidas.includes(v)) alternar(v, false); break; }
+    case "editar-nome": ui.editandoNome = true; render(); break;
+    case "cancelar-nome": ui.editandoNome = false; render(); break;
+    case "abrir-foto": ui.folha = "foto"; render(); break;
+    case "abrir-sair": ui.folha = "sair"; render(); break;
+    case "fechar-folha": ui.folha = null; render(); break;
+    case "abrir-avisos": ui.folha = "avisos"; render(); break;
+    case "baixar-certificado": baixarCertificado(); break;
+    case "compartilhar-certificado": compartilharCertificado(); break;
+    case "abrir-instalar":
+    case "instalar": {
+      const pr = promptInstalar;
+      if (!pr) { ui.folha = "instalar"; render(); break; }
+      promptInstalar = null;
+      pr.prompt();
+      pr.userChoice.then((r) => { if (r && r.outcome === "accepted") localStorage.setItem(CHAVE_INSTALAR, "instalado"); render(); }, () => render());
+      break;
+    }
+    case "fechar-cartao-instalar": localStorage.setItem(CHAVE_INSTALAR, String(Date.now())); render(); break;
+    case "copiar-link": {
+      const link = location.origin + location.pathname;
+      const ok = () => { alvo.innerHTML = `${ic("check", { s: 18 })} Link copiado!`; };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(ok, () => window.prompt("Copie o link:", link));
+      else window.prompt("Copie o link:", link);
+      break;
+    }
+    case "escolher-foto": ui.folha = null; render(); document.getElementById("arquivo-foto").click(); break;
+    case "remover-foto": ui.folha = null; atualizar(({ foto, ...resto }) => resto); break;
+    case "sair": ui.folha = null; localStorage.removeItem(CHAVE); location.replace("#/entrar"); break;
+  }
+});
+document.addEventListener("input", (e) => {
+  if (e.target.id === "busca-aulas") { ui.buscaAulas = e.target.value; document.getElementById("lista-modulos").innerHTML = listaModulos(new Set(lerPerfil().concluidas)); }
+  if (e.target.id === "busca-mat") { ui.buscaMat = e.target.value; document.getElementById("conteudo-mat").innerHTML = conteudoMateriais(lerPerfil()); }
+});
+document.addEventListener("submit", (e) => {
+  if (e.target.id !== "form-nome") return;
+  e.preventDefault();
+  const n = document.getElementById("campo-nome").value.trim();
+  if (n.length < 2) return;
+  ui.editandoNome = false;
+  atualizar((p) => ({ ...p, nome: n }));
+});
+document.getElementById("arquivo-foto").addEventListener("change", async (e) => {
+  const arq = e.target.files?.[0];
+  e.target.value = "";
+  if (!arq) return;
+  ui.erroFoto = "";
+  try { const foto = await prepararFoto(arq); atualizar((p) => ({ ...p, foto })); }
+  catch { ui.erroFoto = "Não foi possível usar essa imagem. Tente outra foto."; render(); }
+});
+window.addEventListener("hashchange", render);
+window.addEventListener("storage", (e) => { if (e.key === CHAVE) render(); });
+setInterval(() => { if (rotaAtual().nome === "materiais") { const el = document.getElementById("conteudo-mat"), p = lerPerfil(); if (el && p) el.innerHTML = conteudoMateriais(p); } }, 30000);
+render();
+</script>
+</body>
+</html>
